@@ -25,6 +25,11 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.IMAGE_NAME }}
+          
+      - name: Test
+        run: |
+          pwd
+          ls
 
       - name: Build and push image
         uses: docker/build-push-action@v6
