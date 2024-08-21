@@ -36,7 +36,8 @@ jobs:
       - name: Build and push image
         uses: docker/build-push-action@v6
         with:
-          context: krm-functions/configinject-fn
+          context: .
+          file: krm-functions/configinject-fn/Dockerfile
           sbom: true
           push: true
           tags: ${{ steps.meta.outputs.tags }}
