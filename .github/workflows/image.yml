@@ -28,7 +28,7 @@ jobs:
           
       - name: Test
         run: |
-          pwd && ls && ls
+          ls
 
       - name: Build and push image
         uses: docker/build-push-action@v6
