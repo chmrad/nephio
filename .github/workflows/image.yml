@@ -12,6 +12,13 @@ jobs:
     outputs:
       configinject-fn: ${{ steps.filter.outputs.configinject-fn }}
       dnn-fn: ${{ steps.filter.outputs.dnn-fn }}
+      gen-configmap-fn: ${{ steps.filter.outputs.gen-configmap-fn }}
+      interface-fn: ${{ steps.filter.outputs.interface-fn }}
+      ipam-fn: ${{ steps.filter.outputs.ipam-fn }}
+      nad-fn: ${{ steps.filter.outputs.nad-fn }}
+      nfdeploy-fn: ${{ steps.filter.outputs.nfdeploy-fn }}
+      ueransim-deploy-fn: ${{ steps.filter.outputs.ueransim-deploy-fn }}
+      vlan-fn: ${{ steps.filter.outputs.vlan-fn }}
     steps:
     - uses: actions/checkout@v4
     - uses: dorny/paths-filter@v3
