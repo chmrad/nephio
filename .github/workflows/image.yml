@@ -13,6 +13,7 @@ jobs:
       configinject-fn: ${{ steps.filter.outputs.configinject-fn }}
       dnn-fn: ${{ steps.filter.outputs.dnn-fn }}
     steps:
+    - uses: actions/checkout@v4
     - uses: dorny/paths-filter@v3
       id: filter
       with:
