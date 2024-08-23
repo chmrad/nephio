@@ -4,11 +4,27 @@ on:
   push:
   workflow_dispatch:
 
-env:
-  IMAGE_NAME: radoslawc/configinject-fn
-
 jobs:
-  docker:
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      configinject-fn: ${{ steps.filter.outputs.configinject-fn }}
+      dnn-fn: ${{ steps.filter.outputs.dnn-fn }}
+    steps:
+    - uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        filters: |
+          configinject-fn:
+            - 'krm-functions/configinject-fn/**'
+          dnn-fn:
+            - 'krm-functions/dnn-fn/**'
+
+  configinject-fn:
+    needs: changes
+    if: ${{ needs.configinject-fn.outputs.backend == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -27,11 +43,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.IMAGE_NAME }}
-          
-      - name: Test
-        run: |
-          ls
+          images: radoslawc/configinject-fn
 
       - name: Build and push image
         uses: docker/build-push-action@v6
@@ -41,3 +53,37 @@ jobs:
           sbom: true
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+
+
+  dnn-fn:
+    needs: changes
+    if: ${{ needs.changes.outputs.dnn-fn == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: radoslawc/configinject-fn
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: krm-functions/dnn-fn/Dockerfile
+          sbom: true
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+
