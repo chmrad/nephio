@@ -6,6 +6,11 @@ import (
 	"os"
 )
 
+r := &fnr.FnR{
+	Client: nil,
+}
+
+
 func main() {
 	if err := fn.AsMain(fn.ResourceListProcessorFunc(fnr.Run)); err != nil {
 		os.Exit(1)
