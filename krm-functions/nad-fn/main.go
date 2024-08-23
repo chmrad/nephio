@@ -1,5 +1,5 @@
 package main
-
+/*ttt*/
 import (
 	"github.com/GoogleContainerTools/kpt-functions-sdk/go/fn"
 	fnr "github.com/nephio-project/nephio/krm-functions/nad-fn/fn"
