@@ -22,6 +22,20 @@ jobs:
             - 'krm-functions/configinject-fn/**'
           dnn-fn:
             - 'krm-functions/dnn-fn/**'
+          gen-configmap-fn:
+            - 'krm-functions/gen-configmap-fn/**'
+          interface-fn:
+            - 'krm-functions/interface-fn/**'
+          ipam-fn:
+            - 'krm-functions/ipam-fn/**'
+          nad-fn:
+            - 'krm-functions/nad-fn/**'
+          nfdeploy-fn:
+            - 'krm-functions/nfdeploy-fn/**'
+          ueransim-deploy-fn:
+            - 'krm-functions/ueransim-deploy-fn/**'
+          vlan-fn:
+            - 'krm-functions/vlan-fn/**'
 
   configinject-fn:
     needs: changes
@@ -88,3 +102,229 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
 
+  gen-configmap-fn:
+    needs: changes
+    if: ${{ needs.changes.outputs.gen-configmap-fn == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: radoslawc/gen-configmap-fn
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: krm-functions/gen-configmap-fn/Dockerfile
+          sbom: true
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+
+  interface-fn:
+    needs: changes
+    if: ${{ needs.changes.outputs.interface-fn == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: radoslawc/interface-fn
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: krm-functions/interface-fn/Dockerfile
+          sbom: true
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+
+  ipam-fn:
+    needs: changes
+    if: ${{ needs.changes.outputs.ipam-fn == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: radoslawc/ipam-fn
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: krm-functions/ipam-fn/Dockerfile
+          sbom: true
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+
+
+  nad-fn:
+    needs: changes
+    if: ${{ needs.changes.outputs.nad-fn == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: radoslawc/nad-fn
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: krm-functions/nad-fn/Dockerfile
+          sbom: true
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+
+  nfdeploy-fn:
+    needs: changes
+    if: ${{ needs.changes.outputs.nfdeploy-fn == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: radoslawc/nfdeploy-fn
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: krm-functions/nfdeploy-fn/Dockerfile
+          sbom: true
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+
+
+  ueransim-deploy-fn:
+    needs: changes
+    if: ${{ needs.changes.outputs.ueransim-deploy-fn == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: radoslawc/ueransim-deploy-fn
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: krm-functions/ueransim-deploy-fn/Dockerfile
+          sbom: true
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+
+  vlan-fn:
+    needs: changes
+    if: ${{ needs.changes.outputs.vlan-fn == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: radoslawc/vlan-fn
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: krm-functions/vlan-fn/Dockerfile
+          sbom: true
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+     
